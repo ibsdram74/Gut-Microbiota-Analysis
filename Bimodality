@@ -1,0 +1,49 @@
+Genus1 <- read.csv("File1_p.csv", header = TRUE) #open CSV file
+Genus2 <- read.csv("File1_p.csv", header = TRUE) #open CSV file
+################for individual plots of density and beanplot##########
+par(mfrow = c(1,2))
+plot(density(Genus1$Prevotella_Sample_E), col="red", col.axis = "sky blue",  
+     main = "Prevotella", col.main= "blue", 
+     sub = "Red = Group A, Green = Group B", col.sub = "red")
+lines(density(Genus2$Prevotella_Sample_C), col="green")
+
+#use log="y" or log="" to force a log-axis. In case of log="auto", 
+#a log-transformation is used if appropriate
+library("beanplot")
+beanplot(Genus1$Prevotella_Sample_A, Genus2$Prevotella_Sample_B,
+         horizontal=FALSE, 
+         border='NA',
+         col=c("grey", "blue", "red"), what=c(1,2,2,1), 
+         xlab="Density",  
+         log="auto",
+         ylab='Abundance',#User Input
+         main="Prevotella") 
+
+######Plotting all the graphs C&E#######################################
+colnames_A <- dimnames(Genus1)[[2]]
+colnames_B <- dimnames(Genus2)[[2]]
+#Density plots
+par(mfrow=c(3, 2))
+for (i in 2:3)#Select Range of species(columns) 
+  {
+  species_name <- c(colnames_A[i], colnames_B[i])
+  d2 <- density(Genus1[,i])
+  d3 <- density(Genus2[,i])
+  plot(d2, main=colnames_e[i], col = "blue", col.main= "blue", 
+       sub = colnames_c[i], col.sub = "red")
+  polygon(d3, border="red")
+}
+
+#Beanplots
+par(mfrow=c(2, 3))
+for (i in 2:13)#Select Range of species(columns)  
+  {
+  species_name <- c(colnames_A[i], colnames_B[i])
+  beanplot(Genus1[,i], Genus[,i], 
+           horizontal=FALSE, 
+           border='NA',
+           col=c("grey", "blue", "red"), what=c(1,2,2,1), 
+           xlab="Density",  
+           log="auto",
+           main=species_name)
+}
